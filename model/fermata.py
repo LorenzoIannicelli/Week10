@@ -1,0 +1,21 @@
+from dataclasses import dataclass
+
+
+@dataclass
+class Fermata:
+    _id_fermata : int
+    _nome : str
+
+    @property
+    def id_fermata(self):
+        return self._id_fermata
+
+    @property
+    def nome(self):
+        return self._nome
+
+    def __str__(self) :
+        return f'Fermata: {self.id_fermata} {self.nome}'
+
+    def __hash__(self) :
+        return hash(self.id_fermata)
