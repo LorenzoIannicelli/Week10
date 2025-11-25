@@ -15,7 +15,7 @@ class Fermata:
         return self._nome
 
     def __str__(self) :
-        return f'Fermata: {self.id_fermata} {self.nome}'
+        return f'Fermata: {self._id_fermata} {self._nome}'
 
     def __hash__(self) :
-        return hash(self.id_fermata)
+        return hash(self._id_fermata)

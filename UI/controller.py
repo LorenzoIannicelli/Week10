@@ -8,7 +8,8 @@ class Controller:
         self._model = model
 
     def handleCreaGrafo(self,e):
-        pass
+        self._model.creaGrafo()
+        print('grafo creato senza problemi')
 
     def handleCercaRaggiungibili(self,e):
         pass
