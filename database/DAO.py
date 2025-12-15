@@ -44,7 +44,9 @@ class DAO():
                 connessione = Connessione(row['id_connessione'], row['id_linea'], row['id_stazP'], row['id_stazA'])
                 result.append(connessione)
 
-        return result
+            cursor.close()
+            cnx.close()
+            return result
 
     @staticmethod
     def readAllConnessioni():
@@ -63,7 +65,9 @@ class DAO():
                 connessione = Connessione(row['id_connessione'], row['id_linea'], row['id_stazP'], row['id_stazA'])
                 result.append(connessione)
 
-        return result
+            cursor.close()
+            cnx.close()
+            return result
 
     @staticmethod
     def readVelocita(linea):

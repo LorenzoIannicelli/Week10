@@ -9,10 +9,24 @@ class Controller:
 
     def handleCreaGrafo(self,e):
         self._model.creaGrafo()
-        print('grafo creato senza problemi')
+        self._view.lst_result.controls.clear()
+        self._view.lst_result.controls.append(ft.Text(f'{self._model._grafo}'))
+
+        for f1, f2, w in self._model._grafo.edges(data=True):
+            temp_perc = w['tempo']
+            self._view.lst_result.controls.append(ft.Text(f'{f1} -> {f2}, Tempo percorrenza: {temp_perc}'))
+
+        self._view.update_page()
 
     def handleCercaRaggiungibili(self,e):
-        pass
+        idStazP = int(self._view._ddStazPartenza.value)
+        raggiungibili = self._model.getRaggiungibili(idStazP)
+        self._view.lst_result.controls.clear()
+
+        for f in raggiungibili:
+            self._view.lst_result.controls.append(ft.Text(f'{f}'))
+
+        self._view.update_page()
 
     def populate_dropdown(self, dd):
         fermate = self._model.get_all_fermate()

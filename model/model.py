@@ -18,7 +18,7 @@ class Model:
         return self._lista_fermate
 
     def creaGrafo(self):
-        self._grafo = nx.MultiDiGraph()
+        self._grafo = nx.DiGraph()
         for fermata in self._lista_fermate:
             self._grafo.add_node(fermata)
 
@@ -33,16 +33,33 @@ class Model:
         connessioni = DAO.readAllConnessioni()
 
         for c in connessioni :
-            stazP = self._dizionario_fermate[c.id_stazP()]
-            stazA = self._dizionario_fermate[c.id_stazA()]
-            velocita = DAO.readVelocita(c.id_linea())
+            stazP = self._dizionario_fermate[c.id_stazP]
+            stazA = self._dizionario_fermate[c.id_stazA]
+            velocita = DAO.readVelocita(c.id_linea)
 
             punto_P = (stazP.coordX, stazP.coordY)
-            punto_A = (stazA.coordX, stazP.coordY)
+            punto_A = (stazA.coordX, stazA.coordY)
 
             distanza = geodesic(punto_P, punto_A).km
 
             # Calcolo del tempo di percorrenza in minuti
             tempo_perc = distanza / velocita * 60
-            self._grafo.add_edge(c.id_stazP(), c.id_stazA(), tempo = tempo_perc)
-            print(f'Aggiunto arco tra {stazP} e {stazA}, temppo: {self._grafo[stazP][stazA]}')
+
+            print(stazP, stazA, punto_P, punto_A)
+
+            if (self._grafo.has_edge(punto_P, punto_A)):
+                if (self._grafo[stazP][stazA] > tempo_perc):
+                    self._grafo[stazP][stazA]['tempo'] = tempo_perc
+            else:
+                self._grafo.add_edge(stazP, stazA, tempo = tempo_perc)
+
+            #print(f'Aggiunto arco tra {stazP} e {stazA}, tempo: {self._grafo[stazP][stazA]}')
+
+
+    def getRaggiungibili(self, idStazP):
+        result = []
+        stazP = self._dizionario_fermate[idStazP]
+        for u, v in nx.bfs_edges(self._grafo, stazP):
+            result.append(v)
+
+        return result
