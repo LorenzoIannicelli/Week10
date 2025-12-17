@@ -45,7 +45,7 @@ class Model:
             # Calcolo del tempo di percorrenza in minuti
             tempo_perc = distanza / velocita * 60
 
-            print(stazP, stazA, punto_P, punto_A)
+            #print(stazP, stazA, punto_P, punto_A)
 
             if (self._grafo.has_edge(punto_P, punto_A)):
                 if (self._grafo[stazP][stazA] > tempo_perc):
@@ -55,6 +55,8 @@ class Model:
 
             #print(f'Aggiunto arco tra {stazP} e {stazA}, tempo: {self._grafo[stazP][stazA]}')
 
+        print('Grafo creato con successo!')
+
 
     def getRaggiungibili(self, idStazP):
         result = []
@@ -63,3 +65,11 @@ class Model:
             result.append(v)
 
         return result
+
+    def getPercorsoMinimo(self, idStazP, idStazA):
+        objStazP = self._dizionario_fermate[idStazP]
+        objStazA = self._dizionario_fermate[idStazA]
+
+        tempo, perc_min = nx.single_source_dijkstra(self._grafo, objStazP, objStazA)
+
+        return tempo, perc_min

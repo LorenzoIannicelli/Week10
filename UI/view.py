@@ -9,7 +9,7 @@ class View():
         self._page.title = "Metro Paris"
         self._page.horizontal_alignment = 'CENTER'
         self._page.theme_mode = ft.ThemeMode.LIGHT
-        page.window.width = 1000
+        page.window.width = 1200
         page.window.height = 600
         page.window.center()
         # controller (it is not initialized. Must be initialized in the main, after the controller is created)
@@ -44,12 +44,15 @@ class View():
         self._controller.populate_dropdown(self._ddStazPartenza)
         self._controller.populate_dropdown(self._ddStazArrivo)
 
-        self._btnCalcola = ft.ElevatedButton(text="Calcola Raggiungibili", on_click=self._controller.handleCercaRaggiungibili)
+        self._btnCalcola = ft.ElevatedButton(text="Calcola Raggiungibili", on_click=self._controller.handleCercaRaggiungibili, disabled=True)
+
+        self._btnPercMinimo = ft.ElevatedButton(text="Percorso Minimo", on_click=self._controller.handlePercorsoMinimo, disabled=True)
 
         row2 = ft.Row([self._btnCrea,
                        self._ddStazPartenza,
                        self._ddStazArrivo,
                        self._btnCalcola,
+                       self._btnPercMinimo
                        ], alignment=ft.MainAxisAlignment.CENTER, spacing=30)
 
         # Row with listview

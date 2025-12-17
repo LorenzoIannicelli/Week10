@@ -16,6 +16,9 @@ class Controller:
             temp_perc = w['tempo']
             self._view.lst_result.controls.append(ft.Text(f'{f1} -> {f2}, Tempo percorrenza: {temp_perc}'))
 
+        self._view._btnCalcola.disabled = False
+        self._view._btnPercMinimo.disabled = False
+
         self._view.update_page()
 
     def handleCercaRaggiungibili(self,e):
@@ -26,6 +29,19 @@ class Controller:
         for f in raggiungibili:
             self._view.lst_result.controls.append(ft.Text(f'{f}'))
 
+        self._view.update_page()
+
+    def handlePercorsoMinimo(self,e):
+        idStazP = int(self._view._ddStazPartenza.value)
+        idStazA = int(self._view._ddStazArrivo.value)
+
+        tempo, perc_minimo = self._model.getPercorsoMinimo(idStazP, idStazA)
+
+        self._view.lst_result.controls.clear()
+        for f in perc_minimo:
+            self._view.lst_result.controls.append(ft.Text(f'{f}'))
+
+        self._view.lst_result.controls.append(ft.Text(f'Il tempo impiegato è {tempo} minuti.'))
         self._view.update_page()
 
     def populate_dropdown(self, dd):
